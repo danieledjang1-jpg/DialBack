@@ -1,0 +1,5 @@
+import { useState } from 'react';
+import { Clock3, Trash2, History as HistoryIcon } from 'lucide-react';
+import SectionHeading from '../components/SectionHeading';
+import { readState,writeState } from '../utils/storage';
+export default function Activity(){const [state,setState]=useState(readState());function clear(){const next={...state,activity:[]};writeState(next);setState(next)}return <><SectionHeading eyebrow="YOUR JOURNEY" title="Activity history" description="A local record of the actions you have taken in this demo." action={state.activity.length>0&&<button className="btn btn-secondary" onClick={clear}><Trash2 size={15}/> Clear history</button>}/>{state.activity.length?<div className="panel history-panel">{state.activity.map(a=><div className="activity-row" key={a.id}><div className="history-icon"><Clock3 size={16}/></div><span>{a.label}</span><small>{new Date(a.at).toLocaleString()}</small></div>)}</div>:<div className="empty-state history-empty"><div className="empty-icon"><HistoryIcon/></div><b>No activity yet</b><p>Your USSD sessions and opened service guides will appear here.</p></div>}</>}
